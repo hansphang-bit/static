@@ -1,0 +1,111 @@
+<script>
+    const second = 1000,
+          minute = second * 60,
+          hour = minute * 60,
+          day = hour * 24,
+          week = 7;
+    
+    var eventList = ["June 21 2020 14:00:00", "June 28 2020 14:00:00", "July 5 2020 16:00:00"]
+    
+    
+    let countDown = new Date(eventList[0]).getTime(),
+        x = setInterval(function() {    
+    
+          let now = new Date().getTime(),
+              distance = countDown - now;
+    
+          if (distance < 0) {
+            eventList.shift();
+            countDown = new Date(eventList[0]).getTime();
+            now = new Date().getTime();
+            distance = countDown - now;
+            addNewEvent();
+          }
+    
+          document.getElementById('days').innerText = Math.floor(distance / (day)),
+           
+          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+            document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+            document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second),
+         
+          add();
+    
+        }, second)
+    
+    var addNewEvent = function nextWeek(){
+        var newEvent = new Date(eventList[eventList.length-1]);
+        newEvent.setDate(newEvent.getDate() + week);
+        var newString = newEvent.toString();
+        eventList.push(newString);
+    
+    
+    }
+    
+    
+    
+    var add = function adding(){
+      if(document.getElementById('days').innerText < 10){
+        document.getElementById('days').innerText = "0"+ document.getElementById('days').innerText
+      };
+     
+        if(document.getElementById('hours').innerText < 10){
+        document.getElementById('hours').innerText = "0"+ document.getElementById('hours').innerText
+      };
+     
+         if(document.getElementById('minutes').innerText < 10){
+        document.getElementById('minutes').innerText = "0"+ document.getElementById('minutes').innerText
+      };
+     
+         if(document.getElementById('seconds').innerText < 10){
+        document.getElementById('seconds').innerText = "0"+ document.getElementById('seconds').innerText
+      };
+    }
+    </script>
+    
+    <style>
+    
+    .timer-title{
+      font-family:"proxima-nova";
+      display:block;
+    }
+    
+    .timer-list {
+      display: inline-block;
+      font-size: 1em;
+      list-style-type: none;
+      padding: .5em;
+      font-family: "proxima-nova";
+      width:20%;
+    }
+    
+    .timer-list .timer-span {
+      display: block;
+      font-size: 1.5rem;
+       border: 1px solid;
+      border-radius: 15px;
+      border-color: rgba(26, 49, 56, 0.3);
+        font-family: "proxima-nova";
+      padding-top:0.2em;
+      padding-bottom:0.2em;
+    }
+    
+    
+    .container {
+      position:relative;
+      bottom:2em;
+      margin:  auto;
+      text-align: center;
+      display: block;
+    }
+    </style>
+    <div class="container">
+       
+        <li class="timer-list"><span class="timer-span" id="days"></span>Days</li>
+        <li class="timer-list"><span class="timer-span" id="hours"></span>Hours</li>
+        <li class="timer-list"><span class="timer-span" id="minutes"></span>Minutes</li>
+        <li class="timer-list"><span class="timer-span" id="seconds"></span>Seconds</li>
+    </div>
+    
+    <div id="sunday-service" style="position: relative; bottom: 700px;">
+      
+    </div>
